@@ -18,10 +18,10 @@ models = [1, 2]
 procedures = [1, 2, 3]
 B2s = [1, 2]
 
-rho = st.slider('rho', value=0.1, min_value=0.1, max_value=0.9, step=0.1)
-variance = st.slider(label='variance', value=10, min_value=10, max_value=20, step=1)
+rho = st.slider('Correlation between X1 and X2 (ρ)', value=0.1, min_value=0.1, max_value=0.9, step=0.1)
+variance = st.slider(label='Error variance (σ^2)', value=10, min_value=10, max_value=20, step=1)
 sigma = np.sqrt(variance)
-model_selector = st.selectbox("Model", ['Model 1', 'Model 2'])
+model_selector = st.selectbox("Data Generating Process", ['Model 1', 'Model 2'])
 model = 1 if model_selector == 'Model 1' else 2
 
 if 'mc_results' not in st.session_state:
