@@ -185,7 +185,10 @@ if st.session_state['mc_results'] is not None:
 
             if idx == 1:
                 ax.set_xlim(-5, 5)
-                ax.set_ylim(0, 1.5)
+                if st.session_state['model'] == 1:
+                    ax.set_ylim(0, 1.5)
+                else:
+                   ax.set_ylim(0, 10)
 
             if idx == 2:
                 ax.set_xlim(-5, 10)
