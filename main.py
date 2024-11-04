@@ -6,7 +6,7 @@ import seaborn as sns
 import statsmodels.api as sm
 
 st.title('Monte Carlo simulation of alternative OLS procedures')
-st.html('<p>Run the simulation to generate charts comparing the distribution of OLS estimators under alternative specification procedures. It is assumed that β0 = β1 = 1.</p><ul><li><b>Procedure #1</b>: β1 and β2 are estimated by regressing y on X1 and X2.</li><li><b>Procedure #2</b>: β1 is estimated by regressing y on X1. β2 is assumed to be 0.</li><li><b>Procedure #3</b>: If β2 is statistically significant at the 0.05 level in Procedure #1, β1 and β2 come from Procedure #1. Otherwise, β1 and β2 come from Procedure #2.</li></ul>')
+st.html('<p>Run the simulation to generate charts comparing the properties of OLS estimators under alternative specification procedures. It is assumed that β0 = β1 = 1.</p><ul><li><b>Procedure #1</b>: β1 and β2 are estimated by regressing y on X1 and X2.</li><li><b>Procedure #2</b>: β1 is estimated by regressing y on X1. β2 is assumed to be 0.</li><li><b>Procedure #3</b>: If β2 is statistically significant at the 0.05 level in Procedure #1, β1 and β2 come from Procedure #1. Otherwise, β1 and β2 come from Procedure #2.</li></ul>')
 
 # nsim = 1000
 # N = 50
