@@ -22,7 +22,7 @@ rho = st.slider('Correlation between X1 and X2 (ρ)', value=0.1, min_value=0.1, 
 variance = st.slider(label='Error variance (σ^2)', value=10, min_value=10, max_value=20, step=1)
 sigma = np.sqrt(variance)
 model_selector = st.selectbox("Data Generating Process", ['y = β0 + β1*X1 + β2*X2 + e', 'y = β0 + β1*X1 + e'])
-model = 1 if model_selector == 'Model 1' else 2
+model = 1 if model_selector == 'y = β0 + β1*X1 + β2*X2 + e' else 2
 
 if 'mc_results' not in st.session_state:
     st.session_state['mc_results'] = None
