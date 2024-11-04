@@ -6,9 +6,10 @@ import seaborn as sns
 import statsmodels.api as sm
 
 st.title('Monte Carlo simulation of alternative OLS procedures')
+st.html('<p>Run the simulation to generate charts comparing the distribution of OLS estimators under alternative specification procedures. It is assumed that β0 = β1 = 1.</p><ul><li><b>Procedure #1</b>: β1 and β2 are estimated by regressing y on X1 and X2.</li><li><b>Procedure #2</b>: β1 is estimated by regressing y on X1. β2 is assumed to be 0.</li><li><b>Procedure #3</b>: If β2 is statistically significant at the 0.05 level in Procedure #1, β1 and β2 come from Procedure #1. Otherwise, β1 and β2 come from Procedure #2.</li></ul>')
 
-nsim = 1000
-N = 50
+# nsim = 1000
+# N = 50
 B0 = 1
 B1 = 1
 
@@ -18,6 +19,8 @@ models = [1, 2]
 procedures = [1, 2, 3]
 B2s = [1, 2]
 
+nsim = st.slider('Number of simulations', value=1000, min_value=100, max_value=10000, step=10)
+N = st.slider('Sample size', value=50, min_value=25, max_value=1000, step=1)
 rho = st.slider('Correlation between X1 and X2 (ρ)', value=0.1, min_value=0.1, max_value=0.9, step=0.1)
 variance = st.slider(label='Error variance (σ^2)', value=10, min_value=10, max_value=20, step=1)
 sigma = np.sqrt(variance)
@@ -26,6 +29,8 @@ model = 1 if model_selector == 'y = β0 + β1*X1 + β2*X2 + e' else 2
 
 if 'mc_results' not in st.session_state:
     st.session_state['mc_results'] = None
+    st.session_state['N'] = None
+    st.session_state['nsim'] = None
     st.session_state['rho'] = None
     st.session_state['sigma'] = None
     st.session_state['model'] = None
@@ -108,7 +113,7 @@ def simulation(X1, X2, e, index, procedure, model, rho, N, sigma, B2):
 def run_simulations(samples, results, procedure, model, rho, N, sigma, B2):
   results.extend([simulation(X1=s['X1'], X2=s['X2'], e=s['e'], index=s['index'], procedure=procedure, model=model, rho=rho, N=N, sigma=sigma, B2=B2) for s in samples])
 
-def run_monte_carlo(rho, sigma, model):
+def run_monte_carlo(nsim, N, rho, sigma, model):
     results = []
 
     np.random.seed(12345)
@@ -136,10 +141,12 @@ def run_monte_carlo(rho, sigma, model):
 
 def button_cb():
     st.session_state['button_disabled'] = True
+    st.session_state['nsim'] = nsim
+    st.session_state['N'] = N
     st.session_state['rho'] = rho
     st.session_state['sigma'] = sigma
     st.session_state['model'] = model
-    st.session_state['mc_results'] = run_monte_carlo(rho, sigma, model)
+    st.session_state['mc_results'] = run_monte_carlo(nsim, N, rho, sigma, model)
 
 run_button = st.button('Run Monte Carlo' if st.session_state['button_disabled'] == False else 'Update Inputs', disabled=st.session_state['button_disabled'], on_click=button_cb, type="primary")
 
